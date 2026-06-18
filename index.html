@@ -31,22 +31,15 @@ body {
   align-items: center;
 }
 
-/* 🐱 BOTH AVATARS SAME SIZE (FIXED) */
+/* 🐱 AVATARS */
 .avatar {
   width: 340px;
   height: 340px;
   object-fit: contain;
   border-radius: 20px;
-  animation: pop 0.6s ease;
 }
 
-@keyframes pop {
-  0% { transform: scale(0); }
-  80% { transform: scale(1.1); }
-  100% { transform: scale(1); }
-}
-
-/* 💌 TEXT (BIGGER & READABLE) */
+/* 💌 TEXT */
 .mail-text {
   margin-top: 18px;
   font-size: 36px;
@@ -56,17 +49,13 @@ body {
   text-shadow: 0 0 12px rgba(255,255,255,0.6);
 }
 
-/* 💖 HEART BUTTON (MAIN TRIGGER) */
+/* 💖 HEART BUTTON */
 .heart-btn {
   margin-top: 18px;
   font-size: 44px;
   cursor: pointer;
   animation: pulse 1.2s infinite;
   user-select: none;
-}
-
-.heart-btn:hover {
-  transform: scale(1.2);
 }
 
 @keyframes pulse {
@@ -111,11 +100,11 @@ body {
 /* 🌯 CLOSE BUTTON */
 .close-btn {
   margin-top: 18px;
-  padding: 10px 18px;
+  padding: 14px 22px;
   border-radius: 999px;
   border: none;
   font-family: 'Quicksand', sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   cursor: pointer;
   background: linear-gradient(135deg, #fbcfe8, #d8b4fe);
   color: white;
@@ -129,11 +118,10 @@ body {
 <div class="avatar-screen" id="avatarScreen">
   <img class="avatar" id="avatarImg" src="assets/mail.png">
 
-  <div class="mail-text">
+  <div class="mail-text" id="avatarText">
     you’ve got mail 💌
   </div>
 
-  <!-- 💖 HEART BUTTON -->
   <div class="heart-btn" onclick="startApp()">💖</div>
 </div>
 
@@ -158,35 +146,30 @@ body {
 <script>
 
 const message =
-`hey you... 💖
-
-just a little note...
-you’re doing really well 🌸
-keep going okay? ✨`;
+`good morning, babe~ 🔆
+it's friyey! just a few
+hrs away from weekend~
+slay the day like you always do!
+take care, you've been living in
+my mind, rent free~ 🫶🏻`;
 
 let i = 0;
 
-/* 🚀 START APP */
 function startApp() {
   document.getElementById("avatarScreen").style.display = "none";
   document.getElementById("env").style.display = "block";
 
-  playBGM();
+  const bgm = document.getElementById("bgm");
+  bgm.volume = 0.3;
+  bgm.play().catch(() => {});
 }
 
-/* 💌 OPEN ENVELOPE */
 function openLetter() {
   const env = document.getElementById("env");
-
-  env.style.transform = "scale(1.02)";
-
-  setTimeout(() => {
-    document.getElementById("letter").style.display = "block";
-    typeWriter();
-  }, 500);
+  document.getElementById("letter").style.display = "block";
+  typeWriter();
 }
 
-/* ⌨️ TYPEWRITER */
 function typeWriter() {
   if (i < message.length) {
     document.getElementById("text").innerHTML += message.charAt(i);
@@ -195,7 +178,7 @@ function typeWriter() {
   }
 }
 
-/* 🌯 CLOSE + SWITCH AVATAR */
+/* 💖 ONLY FIX APPLIED HERE */
 function closeLetter(e) {
   e.stopPropagation();
 
@@ -204,17 +187,12 @@ function closeLetter(e) {
   document.getElementById("text").innerHTML = "";
   i = 0;
 
-  // 😼 switch avatar AFTER close
   document.getElementById("avatarImg").src = "assets/annoy.png";
 
-  document.getElementById("avatarScreen").style.display = "flex";
-}
+  /* ✅ FIX: ensure correct text matches annoy avatar */
+  document.getElementById("avatarText").innerText = "annoy you later~ 😼";
 
-/* 🎵 AUDIO FIX (must be triggered by user interaction) */
-function playBGM() {
-  const bgm = document.getElementById("bgm");
-  bgm.volume = 0.3;
-  bgm.play().catch(() => {});
+  document.getElementById("avatarScreen").style.display = "flex";
 }
 
 </script>
