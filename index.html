@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kawaii Mail </title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Kawaii Mail 💌</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
 
@@ -19,7 +19,7 @@ body {
   align-items: center;
 }
 
-/*  AVATAR SCREEN */
+/* 🌸 AVATAR SCREEN */
 .avatar-screen {
   position: absolute;
   width: 100%;
@@ -29,11 +29,13 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  z-index: 10;
 }
 
+/* 🐱 BOTH AVATARS SAME SIZE (FIXED) */
 .avatar {
-  width: 180px;
+  width: 340px;
+  height: 340px;
+  object-fit: contain;
   border-radius: 20px;
   animation: pop 0.6s ease;
 }
@@ -44,28 +46,35 @@ body {
   100% { transform: scale(1); }
 }
 
+/* 💌 TEXT (BIGGER & READABLE) */
 .mail-text {
-  margin-top: 15px;
-  font-size: 20px;
+  margin-top: 18px;
+  font-size: 36px;
+  font-weight: 600;
   color: white;
   text-align: center;
+  text-shadow: 0 0 12px rgba(255,255,255,0.6);
 }
 
-/*  HEART BUTTON (FIXED - THIS WAS MISSING BEFORE) */
+/* 💖 HEART BUTTON (MAIN TRIGGER) */
 .heart-btn {
   margin-top: 18px;
-  font-size: 34px;
+  font-size: 44px;
   cursor: pointer;
   animation: pulse 1.2s infinite;
   user-select: none;
 }
 
-@keyframes pulse {
-  0%,100% { transform: scale(1); }
-  50% { transform: scale(1.2); }
+.heart-btn:hover {
+  transform: scale(1.2);
 }
 
-/*  ENVELOPE */
+@keyframes pulse {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.25); }
+}
+
+/* 💌 ENVELOPE */
 .envelope {
   width: 360px;
   height: 230px;
@@ -85,19 +94,7 @@ body {
   transform-origin: top;
 }
 
-.shake {
-  animation: shake 0.6s infinite;
-}
-
-@keyframes shake {
-  0% { transform: rotate(0deg); }
-  25% { transform: rotate(-2deg); }
-  50% { transform: rotate(2deg); }
-  75% { transform: rotate(-2deg); }
-  100% { transform: rotate(0deg); }
-}
-
-/*  LETTER */
+/* 📜 LETTER */
 .letter {
   position: absolute;
   top: 15px;
@@ -109,18 +106,9 @@ body {
   padding: 16px;
   display: none;
   color: #7c3aed;
-  overflow-y: auto;
 }
 
-.cursor {
-  animation: blink 0.7s infinite;
-}
-
-@keyframes blink {
-  50% { opacity: 0; }
-}
-
-/*  BURRITO CLOSE */
+/* 🌯 CLOSE BUTTON */
 .close-btn {
   margin-top: 18px;
   padding: 10px 18px;
@@ -131,76 +119,74 @@ body {
   cursor: pointer;
   background: linear-gradient(135deg, #fbcfe8, #d8b4fe);
   color: white;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-
-.close-btn:hover {
-  transform: scale(1.05);
 }
 </style>
 </head>
 
 <body>
 
-<!--  AVATAR INTRO -->
+<!-- 🐱 AVATAR SCREEN -->
 <div class="avatar-screen" id="avatarScreen">
   <img class="avatar" id="avatarImg" src="assets/mail.png">
 
-  <div class="mail-text" id="avatarText">
-    you've got mail 
+  <div class="mail-text">
+    you’ve got mail 💌
   </div>
 
-  <!--  THIS WAS MISSING (CRITICAL FIX) -->
-  <div class="heart-btn" onclick="startApp()"> tap me~</div>
+  <!-- 💖 HEART BUTTON -->
+  <div class="heart-btn" onclick="startApp()">💖</div>
 </div>
 
-<!--  ENVELOPE -->
+<!-- 💌 ENVELOPE -->
 <div class="envelope" id="env" onclick="openLetter()">
   <div class="flap"></div>
 
   <div class="letter" id="letter">
     <div id="text"></div>
-    <span class="cursor">|</span>
 
     <button class="close-btn" onclick="closeLetter(event)">
-       burrito close
+      🌯 burrito close
     </button>
   </div>
 </div>
 
+<!-- 🎵 AUDIO -->
+<audio id="bgm" loop>
+  <source src="your-audio.mp3" type="audio/mpeg">
+</audio>
+
 <script>
 
 const message =
-`hey you... 
+`hey you... 💖
 
-just a little note for you...
-you�re doing really well 
-keep going okay? `;
+just a little note...
+you’re doing really well 🌸
+keep going okay? ✨`;
 
 let i = 0;
 
-/*  START APP (FIXED FLOW) */
+/* 🚀 START APP */
 function startApp() {
   document.getElementById("avatarScreen").style.display = "none";
   document.getElementById("env").style.display = "block";
+
+  playBGM();
 }
 
-/*  OPEN ENVELOPE */
+/* 💌 OPEN ENVELOPE */
 function openLetter() {
   const env = document.getElementById("env");
 
-  env.classList.add("shake");
+  env.style.transform = "scale(1.02)";
 
   setTimeout(() => {
-    env.classList.remove("shake");
-
     document.getElementById("letter").style.display = "block";
-
     typeWriter();
-  }, 900);
+  }, 500);
 }
 
-/*  TYPEWRITER */
+/* ⌨️ TYPEWRITER */
 function typeWriter() {
   if (i < message.length) {
     document.getElementById("text").innerHTML += message.charAt(i);
@@ -209,23 +195,26 @@ function typeWriter() {
   }
 }
 
-/*  CLOSE ENVELOPE */
+/* 🌯 CLOSE + SWITCH AVATAR */
 function closeLetter(e) {
   e.stopPropagation();
 
-  const avatar = document.getElementById("avatarScreen");
-  const env = document.getElementById("env");
-
-  env.style.display = "none";
+  document.getElementById("env").style.display = "none";
   document.getElementById("letter").style.display = "none";
   document.getElementById("text").innerHTML = "";
   i = 0;
 
-  // swap avatar
+  // 😼 switch avatar AFTER close
   document.getElementById("avatarImg").src = "assets/annoy.png";
-  document.getElementById("avatarText").innerText = "annoy you later~ ";
 
-  avatar.style.display = "flex";
+  document.getElementById("avatarScreen").style.display = "flex";
+}
+
+/* 🎵 AUDIO FIX (must be triggered by user interaction) */
+function playBGM() {
+  const bgm = document.getElementById("bgm");
+  bgm.volume = 0.3;
+  bgm.play().catch(() => {});
 }
 
 </script>
